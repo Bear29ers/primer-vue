@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="ja">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Vue</title>
+  </head>
+  <body>
+    <h1 id="app">{{ message }}{{ message2 }}</h1>
+    <!-- <h1 id="app"> -->
+    <!-- v-textを使用したデータ表示 -->
+    <!-- <span v-text="message"></span> -->
+    <!-- </h1> -->
+
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+    <script>
+      app = new Vue({
+        el: '#app',
+        data: {
+          message: 'Hello World!',
+          message2: 'Hello Vue!!',
+        },
+      });
+      // Vue.jsを使用しない場合
+      // document.getElementById('app').textContent = 'Hello World!';
+    </script>
+  </body>
+</html>
