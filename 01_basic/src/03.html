@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="ja">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>if文による表示/非表示の切り替え</title>
+  </head>
+  <body>
+    <div id="app">
+      <p v-if="stock_number > 0">販売中です。</p>
+      <p v-else>在庫切れのため販売していません。</p>
+
+      <!-- v-showによる表示の切り替え -->
+      <p v-show="stock_number > 0">販売中です。</p>
+
+      <!-- 
+      v-ifとv-showの使い分け
+      v-showは条件が合わない場合は、displayプロパティがnoneになっており、ブラウザに見えないだけで要素は作成され存在はしています。
+      v-ifの場合は、条件が一致しなければ要素は作成されないので、その要素は存在しない。
+      ブラウザ描画中に頻繁に表示/非表示を切り替える場合はv-showを使い、表示/非表示を切り替えない場合おはv-ifを使用する。
+      -->
+
+      <!-- 複数の要素の表示/非表示 -->
+      <template v-if="stock_number > 0">
+        <p>販売中です。</p>
+        <p>まだ在庫は{{ stock_number}}あります。</p>
+      </template>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+    <script>
+      const app = new Vue({
+        el: '#app',
+        data: {
+          stock_number: 1,
+        },
+      });
+    </script>
+  </body>
+</html>
