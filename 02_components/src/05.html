@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="ja">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>コンポーネントとSlot（スロット）</title>
+  </head>
+  <body>
+    <div id="app">
+      <slot-test>スロットによる挿入</slot-test>
+      <slot-test-2>
+        <div slot="title">vue.jsの基礎</div>
+        <p slot="content">vue.jsについて</p>
+      </slot-test-2>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+    <script>
+      Vue.component('slot-test', {
+        template: '<p><slot></slot></p>',
+      });
+
+      Vue.component('slot-test-2', {
+        template: `<div>
+        <h1><slot name="title">タイトル</slot></h1>
+        <p><slot name="content">内容</slot></h1>
+        </div>`,
+      });
+    </script>
+  </body>
+</html>
