@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="ja">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>イベントの設定方法</title>
+  </head>
+  <style>
+    .active {
+      background-color: red;
+      color: white;
+    }
+  </style>
+  <body>
+    <div id="app">
+      <!-- ボタン要素のclickイベント処理 -->
+      <button v-on:click="clickButton">ボタン</button>
+
+      <!-- class属性のv-bindとの組み合わせ -->
+      <h1 v-bind:class="{active: isActive}">Hello World</h1>
+      <button v-on:click="classToggle">ボタン</button>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+    <script>
+      const app = new Vue({
+        el: '#app',
+        data: {
+          isActive: true,
+        },
+        methods: {
+          clickButton() {
+            alert('Click Button');
+          },
+          classToggle() {
+            // 同じVueインスタンスのisActiveを使用するため、thisを使用
+            this.isActive = !this.isActive;
+          },
+        },
+      });
+    </script>
+  </body>
+</html>
