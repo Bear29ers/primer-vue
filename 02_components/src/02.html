@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="ja">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>コンポーネントの設定 - グローバルとローカル登録の違い</title>
+  </head>
+  <body>
+    <div id="app">
+      <div id="app">
+        <hello-world></hello-world>
+        <!-- app2のローカルで登録したコンポーネントは使用できない（表示されない） -->
+        <hello-view></hello-view>
+      </div>
+
+      <div id="app2">
+        <hello-world></hello-world>
+        <hello-view></hello-view>
+      </div>
+
+      <div id="app3">
+        <!-- コンポーネントを複数再利用した場合はそれぞれが独立したものとして作成されるので、countの値はそれぞれで持っている -->
+        <button-counter></button-counter>
+        <button-counter></button-counter>
+        <button-counter></button-counter>
+      </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+    <script>
+      Vue.component('hello-world', {
+        template: '<h1>{{ message }}</h1>',
+        // コンポーネントでdataを使用する
+        data: function () {
+          return {
+            message: 'Hello Vue',
+          };
+        },
+      });
+
+      Vue.component('button-counter', {
+        template: `<p>
+        カウント: {{ count }} 
+        <button v-on:click="countUp">
+        Up
+        </button>
+        <button v-on:click="countDown">
+        Down
+        </button>
+        </p>`,
+        data: function () {
+          return {
+            count: 0,
+          };
+        },
+        methods: {
+          countUp() {
+            this.count++;
+          },
+          countDown() {
+            this.count--;
+          },
+        },
+      });
+
+      const app = new Vue({
+        el: '#app',
+      });
+
+      const app2 = new Vue({
+        el: '#app2',
+        components: {
+          'hello-view': {
+            template: '<h1>Hello View</h1>',
+          },
+        },
+      });
+    </script>
+  </body>
+</html>

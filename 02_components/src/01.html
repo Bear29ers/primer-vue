@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="ja">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>コンポーネントの設定</title>
+  </head>
+  <body>
+    <div id="app">
+      <hello-world></hello-world>
+      <hello-world></hello-world>
+      <hello-world></hello-world>
+      <good-morning></good-morning>
+      <good-afternoon></good-afternoon>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+    <script type="module">
+      // コンポーネントのimport
+      import GoodAfternoon from './GoodAfternoon.js';
+
+      // グローバルへのコンポーネント登録
+      // Vue.componentの定義はnew Vueよりも前に記述する必要がある。
+      Vue.component('hello-world', {
+        template: '<h1>Hello World</h1>',
+      });
+
+      const app = new Vue({
+        el: '#app',
+        data: {},
+        // ローカルへのコンポーネント登録
+        components: {
+          'good-morning': {
+            template: '<h1>Good Morning</h1>',
+          },
+          'good-afternoon': GoodAfternoon,
+        },
+      });
+    </script>
+  </body>
+</html>
