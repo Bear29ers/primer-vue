@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="ja">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>タグ属性へのバインド</title>
+  </head>
+  <style>
+    .active {
+      color: #fff;
+      background-color: red;
+    }
+  </style>
+  <body>
+    <div id="app" v-bind:style="appStyle">
+      <!-- <a v-bind:href="google">検索エンジン</a> -->
+
+      <!-- style属性へのバインド -->
+      <!-- <a v-bind:style="style">検索エンジン</a> -->
+      <!-- <a v-bind:style="{fontSize: applyFontSize, color: fontColor}" >検索エンジン</a> -->
+      <a v-bind:style="styleObject" v-bind:href="google">検索エンジン</a>
+
+      <!-- class属性へのバインド -->
+      <h1 v-bind:class="{'active italic text-lg font-bold': isActive, error: hasError}">class属性へのバインド</h1>
+      <h1 v-bind:class="classObj">class属性へのバインド</h1>
+      <!-- 配列でのclass指定（真偽値不要） -->
+      <h1 v-bind:class="[isActive, hasError]">class属性へのバインド</h1>
+      <!-- 変数の値によってclassを分けたい場合 -->
+      <h1 class="h-screen" :class="show ? 'w-52' : 'w-20'">変数の値によるclassの出しわけ</h1>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+    <script>
+      const app = new Vue({
+        el: '#app',
+        data: {
+          appStyle: {
+            display: 'flex',
+            flexDirection: 'column',
+          },
+          google: 'https://google.com',
+          style: 'font-size:12px;color:red;',
+          applyFontSize: '12px',
+          fontColor: 'red',
+          styleObject: {
+            fontSize: '12px',
+            color: 'red',
+          },
+          isActive: true,
+          hasError: false,
+          classObj: {
+            active: true,
+            error: true,
+          },
+        },
+      });
+    </script>
+  </body>
+</html>
