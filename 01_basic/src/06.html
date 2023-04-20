@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="ja">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>データを利用する処理（算出プロパティ ）</title>
+  </head>
+  <body>
+    <div id="app">
+      <p>税抜価格: ¥{{ no_tax_price }}</p>
+      <p>税込価格: ¥{{ include_tax_price }}</p>
+
+      <p>10文字以上の文字列を入力してください。</p>
+      <input type="text" v-model="inputCharacters" />
+      <p v-if="inputNumber < 10">必要な文字数は{{ needNumbers }}文字です。</p>
+      <p v-else>10文字以上入力されています。</p>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+    <script>
+      const app = new Vue({
+        el: '#app',
+        data: {
+          no_tax_price: 100,
+          inputCharacters: '',
+        },
+        computed: {
+          include_tax_price() {
+            return Math.floor(this.no_tax_price * 1.1);
+          },
+          inputNumber() {
+            return this.inputCharacters.length;
+          },
+          needNumbers() {
+            return 10 - this.inputNumber;
+          },
+        },
+      });
+    </script>
+  </body>
+</html>
