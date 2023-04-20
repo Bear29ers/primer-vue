@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="ja">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>データの受け渡し（親 → 子）</title>
+  </head>
+  <body>
+    <div id="app">
+      <!-- <hello-world message="Hello Vue"></hello-world> -->
+
+      <input type="text" v-model="inputText" />
+      <hello-world v-bind:message="inputText"></hello-world>
+
+      <!-- リストデータを子に渡す -->
+      <blog-post v-for="post in posts" v-bind:key="post.id" v-bind:post="post"></blog-post>
+      <!-- オブジェクトではなく変数として渡す場合 -->
+      <blog-post-2
+        v-for="post in posts"
+        v-bind:key="post.id"
+        v-bind:title="post.title"
+        v-bind:content="post.content"
+      ></blog-post-2>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+    <script>
+      Vue.component('hello-world', {
+        template: '<h1>Hello World and {{ message }}</h1>',
+        // propsを使って子へデータを受け渡す
+        props: ['message'],
+      });
+
+      Vue.component('blog-post', {
+        template: '<div><h2>{{ post.title }}</h2><p>{{ post.content }}</p></div>',
+        props: ['post'],
+      });
+
+      Vue.component('blog-post-2', {
+        template: '<div><h2>{{ title }}</h2><p>{{ content }}</p></div>',
+        props: ['title', 'content'],
+      });
+
+      const app = new Vue({
+        el: '#app',
+        data: {
+          inputText: '',
+          posts: [
+            { id: 0, title: 'vue.jsの基礎', content: 'about vue.js...' },
+            { id: 1, title: 'componentの基礎', content: 'about component...' },
+            { id: 2, title: 'Vue CLIの基礎', content: 'about Vue CLIの基礎...' },
+          ],
+        },
+      });
+    </script>
+  </body>
+</html>

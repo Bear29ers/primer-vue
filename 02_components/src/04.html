@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="ja">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>データの受け渡し（子 → 親）</title>
+  </head>
+  <body>
+    <div id="app">
+      <emit-event v-on:from-child="alertMessage"></emit-event>
+
+      <p>{{ message }}</p>
+      <emit-evnet-2 v-on:from-child="receiveMessage"></emit-evnet-2>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+    <script>
+      Vue.component('emit-event', {
+        template: '<button v-on:click="clickEvent">ボタン</button>',
+        methods: {
+          clickEvent() {
+            this.$emit('from-child');
+          },
+        },
+      });
+
+      Vue.component('emit-evnet-2', {
+        template: `<div>
+        <input type="text" v-model="inputText" />
+        <button v-on:click="clickEvent">送信ボタン</button>
+        </div>`,
+        data: function () {
+          return {
+            inputText: '',
+          };
+        },
+        methods: {
+          clickEvent() {
+            this.$emit('from-child', this.inputText);
+          },
+        },
+      });
+
+      const app = new Vue({
+        el: '#app',
+        data: {
+          message: '',
+        },
+        methods: {
+          alertMessage() {
+            alert('子からイベント受け取ったよ');
+          },
+          receiveMessage(message) {
+            this.message = message;
+          },
+        },
+      });
+    </script>
+  </body>
+</html>

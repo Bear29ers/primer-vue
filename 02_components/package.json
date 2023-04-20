@@ -1,0 +1,14 @@
+{
+  "name": "02_components",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "start": "reload -b -d src"
+  },
+  "author": "Yuta Okuma",
+  "license": "ISC",
+  "devDependencies": {
+    "reload": "^3.2.1"
+  }
+}
