@@ -1,21 +1,41 @@
 <script setup>
-// scriptタグに記述したコードはコンポーネントが読み込まれると自動で実行される
-console.log('Hello World');
-let message = 'Hello World';
-const message2 = '<h2>Good Morning</h2>';
-
-const upperCase = () => {
-  message = message.toUpperCase();
-};
-
-upperCase();
+const link = 'https://google.com';
+const isActive = true;
+const isWhite = true;
 </script>
 
 <template>
   <h1>Vue 3 入門</h1>
-  <p>{{ message }}</p>
-  <p>{{ message.length * 10 }}</p>
-  <p>{{ message.length > 10 ? 'Long' : 'Short' }}</p>
-  <p v-text="message"></p>
-  <p v-html="message2"></p>
+  <div>
+    <a v-bind:href="link">Google</a>
+    <!-- 
+    v-bindを頻繁に利用する例
+    ・imgタグのsrc属性
+    ・buttonタグのdisabled属性
+    -->
+
+    <!-- class属性 -->
+    <p class="active">v-bindの設定方法の確認</p>
+    <p class="underline" :class="{ active: isActive }">v-bindの設定方法の確認</p>
+    <p :class="{ 'underline active': isActive }">v-bindの設定方法の確認</p>
+    <!-- 複数のclassを指定する -->
+    <p class="underline" :class="{ active: isActive, back: isWhite }">v-bindの設定方法の確認</p>
+    <p :class="{ 'underline active': isActive, back: isWhite }">v-bindの設定方法の確認</p>
+    <!-- 論理演算子を使ったclassを指定する -->
+    <p :class="isActive && 'active'">v-bindの設定方法の確認</p>
+    <p :class="isActive ? 'underline' : 'active'">v-bindの設定方法の確認</p>
+  </div>
 </template>
+
+<style>
+.active {
+  color: red;
+  font-weight: 900;
+}
+.underline {
+  text-decoration: underline;
+}
+.back {
+  background-color: white;
+}
+</style>
