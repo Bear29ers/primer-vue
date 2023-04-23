@@ -1,61 +1,48 @@
 <script setup>
-import { ref, reactive, computed } from 'vue';
+import { ref, reactive, watch, watchEffect } from 'vue';
+
 const count = ref(0);
-const user = reactive({
-  firstName: 'John',
-  lastName: 'Doe',
+const count2 = ref(100);
+
+watch(count, (count, previousCount) => {
+  console.log('count:', count);
+  console.log('previousCount:', previousCount);
 });
 
-// const fullName = computed(() => {
-//   console.log('Computed Function');
-//   return `${user.firstName} ${user.lastName}`;
-// });
-const fFullName = () => {
-  console.log('Function');
-  return `${user.firstName} ${user.lastName}`;
-};
-const changeName = () => {
-  fullName.value = 'Jane Doe';
-};
-// Setterを使ってcomputedプロパティを更新する
-const fullName = computed({
-  get() {
-    return `${user.firstName} ${user.lastName}`;
-  },
-  set(newValue) {
-    const names = newValue.split(' ');
-    user.firstName = names[0];
-    user.lastName = names[names.length - 1];
-  },
+const state = reactive({
+  count: 0,
 });
 
-const users = [
-  { id: 1, name: 'John Doe', email: 'john@test.com', admin: true },
-  { id: 2, name: 'Jane Doe', email: 'jane@test.com', admin: false },
-  { id: 3, name: 'Kevin MacDonald', email: 'kevin@test.com', admin: false },
-];
+watch(
+  () => state.count,
+  (count, previousCount) => {
+    console.log('count:', count);
+    console.log('previousCount:', previousCount);
+  }
+);
+watch(
+  () => state,
+  (state, previousCount) => {
+    console.log('state:', state);
+    console.log('previousCount:', previousCount);
+  },
+  // オブジェクトの変更を検知するオプション
+  // { deep: true }
+  // ページを開いた直後に実行
+  { immediate: true }
+);
 
-const adminUsers = computed(() => users.filter((user) => user.admin === true));
+watchEffect(() => console.log(count.value));
+watchEffect(() => console.log(`${count.value}/${count2.value}`));
 </script>
 
 <template>
   <h1>Vue 3 入門</h1>
-  <!-- <h2>fullName: {{ user.firstName }} {{ user.lastName }}</h2> -->
-  <h2>fullName: {{ fullName }}</h2>
-  <div v-for="user in adminUsers" :key="user.id">
-    <div>{{ user.id }} {{ user.name }} {{ user.email }}</div>
-  </div>
-  <!-- computed関数におけるキャッシュの検証 -->
-  <!-- <h2>fFullName: {{ fFullName() }}</h2> -->
-  <!-- <h2>fFullName: {{ fFullName() }}</h2> -->
-  <!-- <h2>fFullName: {{ fFullName() }}</h2> -->
-  <!-- <h2>fullName: {{ fullName }}</h2> -->
-  <!-- <h2>fullName: {{ fullName }}</h2> -->
-  <!-- <h2>fullName: {{ fullName }}</h2> -->
-  <!---->
-  <!-- <input type="text" v-model="user.firstName" /> -->
-  <!-- <button type="button" @click="count++">count is: {{ count }}</button> -->
-  <button @click="changeName">Change Name</button>
+  <button @click="count++">Count: {{ count }}</button>
+  <button @click="count2++">Count2: {{ count2 }}</button>
+  <br />
+  <button @click="state.count++">Count: {{ state.count }}</button>
+  <br />
 </template>
 
 <style></style>
