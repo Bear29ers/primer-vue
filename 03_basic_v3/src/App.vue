@@ -1,44 +1,42 @@
 <script setup>
-// ref関数を利用して変数にreactivityを持たせる
-// import { ref } from 'vue';
-// const count = ref(0);
-let count = $ref(0);
-// ref関数で定義したreactiveな変数countはオブジェクトでラップされており、valueプロパティのみ持っている。
-console.log(count.value);
+import { ref } from 'vue';
+import { reactive } from 'vue';
 
-const addCount = () => {
-  count++;
+const message = ref('Hello World');
+
+const clickButton = () => {
+  console.log(message.value);
 };
 
-// reactiveを利用する方法
-import { reactive } from 'vue';
-const state = reactive({
-  count: 0,
+const form = reactive({
+  message: 'Hello World',
 });
-const addCount2 = () => {
-  state.count++;
+
+const clickButton2 = () => {
+  console.log(form.message);
 };
 </script>
 
 <template>
   <h1>Vue 3 入門</h1>
+  <p>{{ message }}</p>
+  <input type="text" v-model="message" />
+  <!-- v-modelを分解 -->
+  <!-- <input type="text" :value="message" @input="message = $event.target.value" /> -->
   <div>
-    <button type="button" @click="count++">count is: {{ count }}</button>
+    <button @click="clickButton">Click</button>
   </div>
-  <!-- scriptタグ内でcountの数を増やす方法 -->
+  <input type="text" v-model="form.message" />
   <div>
-    <button type="button" @click="addCount">count is: {{ count }}</button>
+    <button @click="clickButton2">Click</button>
   </div>
-  <!-- reactive関数 -->
-  <div>
-    <button type="button" @click="state.count++">count is: {{ state.count }}</button>
-  </div>
-  <button type="button" @click="addCount2">count is: {{ state.count }}</button>
-  <!--
-  refとreactiveの違い
-  refの場合はscriptタグ内で値にアクセスする場合にvalueを利用すること。
-  reactiveではオブジェクトのみを扱うのに対してrefでは確認したようにprimitiveな値（stringやbooleanなど）もオブジェクトとして設定できる。
-  -->
+  <!-- 修飾子（Modifiers） -->
+  <!-- lazy - input要素からカーソルを外した場合に変更が反映される -->
+  <input type="text" v-model.lazy="reactiveな変数名" />
+  <!-- trim - カーソルを外すと前後の空白を取り除いてくれる -->
+  <input type="text" v-model.trim="reactiveな変数名" />
+  <!-- number - 数字として取得したい場合、typeがtextであっても数値になる -->
+  <input type="text" v-model.number="reactiveな変数名" />
 </template>
 
 <style></style>
