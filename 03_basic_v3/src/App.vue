@@ -1,42 +1,61 @@
 <script setup>
-import { ref } from 'vue';
-import { reactive } from 'vue';
-
-const message = ref('Hello World');
-
-const clickButton = () => {
-  console.log(message.value);
-};
-
-const form = reactive({
-  message: 'Hello World',
+import { ref, reactive, computed } from 'vue';
+const count = ref(0);
+const user = reactive({
+  firstName: 'John',
+  lastName: 'Doe',
 });
 
-const clickButton2 = () => {
-  console.log(form.message);
+// const fullName = computed(() => {
+//   console.log('Computed Function');
+//   return `${user.firstName} ${user.lastName}`;
+// });
+const fFullName = () => {
+  console.log('Function');
+  return `${user.firstName} ${user.lastName}`;
 };
+const changeName = () => {
+  fullName.value = 'Jane Doe';
+};
+// Setterを使ってcomputedプロパティを更新する
+const fullName = computed({
+  get() {
+    return `${user.firstName} ${user.lastName}`;
+  },
+  set(newValue) {
+    const names = newValue.split(' ');
+    user.firstName = names[0];
+    user.lastName = names[names.length - 1];
+  },
+});
+
+const users = [
+  { id: 1, name: 'John Doe', email: 'john@test.com', admin: true },
+  { id: 2, name: 'Jane Doe', email: 'jane@test.com', admin: false },
+  { id: 3, name: 'Kevin MacDonald', email: 'kevin@test.com', admin: false },
+];
+
+const adminUsers = computed(() => users.filter((user) => user.admin === true));
 </script>
 
 <template>
   <h1>Vue 3 入門</h1>
-  <p>{{ message }}</p>
-  <input type="text" v-model="message" />
-  <!-- v-modelを分解 -->
-  <!-- <input type="text" :value="message" @input="message = $event.target.value" /> -->
-  <div>
-    <button @click="clickButton">Click</button>
+  <!-- <h2>fullName: {{ user.firstName }} {{ user.lastName }}</h2> -->
+  <h2>fullName: {{ fullName }}</h2>
+  <div v-for="user in adminUsers" :key="user.id">
+    <div>{{ user.id }} {{ user.name }} {{ user.email }}</div>
   </div>
-  <input type="text" v-model="form.message" />
-  <div>
-    <button @click="clickButton2">Click</button>
-  </div>
-  <!-- 修飾子（Modifiers） -->
-  <!-- lazy - input要素からカーソルを外した場合に変更が反映される -->
-  <input type="text" v-model.lazy="reactiveな変数名" />
-  <!-- trim - カーソルを外すと前後の空白を取り除いてくれる -->
-  <input type="text" v-model.trim="reactiveな変数名" />
-  <!-- number - 数字として取得したい場合、typeがtextであっても数値になる -->
-  <input type="text" v-model.number="reactiveな変数名" />
+  <!-- computed関数におけるキャッシュの検証 -->
+  <!-- <h2>fFullName: {{ fFullName() }}</h2> -->
+  <!-- <h2>fFullName: {{ fFullName() }}</h2> -->
+  <!-- <h2>fFullName: {{ fFullName() }}</h2> -->
+  <!-- <h2>fullName: {{ fullName }}</h2> -->
+  <!-- <h2>fullName: {{ fullName }}</h2> -->
+  <!-- <h2>fullName: {{ fullName }}</h2> -->
+  <!---->
+  <!-- <input type="text" v-model="user.firstName" /> -->
+  <!-- <button type="button" @click="count++">count is: {{ count }}</button> -->
+  <button @click="changeName">Change Name</button>
 </template>
 
 <style></style>
