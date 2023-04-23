@@ -1,29 +1,61 @@
 <script setup>
-// const error = true;
-const error = '';
-const stock = 0;
-const error2 = true;
+const languages = ['JavaScript', 'TypeScript', 'Vue.js', 'React', 'Rust', 'Go'];
+const users = [
+  { id: 1, name: 'John Doe', email: 'john@test.com', admin: true },
+  { id: 2, name: 'Jane Doe', email: 'jane@test.com', admin: false },
+  { id: 3, name: 'Kevin MacDonald', email: 'kevin@test.com', admin: false },
+];
+const user = {
+  id: 1,
+  name: 'John Doe',
+  email: 'john@test.com',
+  admin: true,
+};
 </script>
 
 <template>
   <h1>Vue 3 入門</h1>
-  <div v-if="error">{{ error }}</div>
-  <div v-else>エラーはありません。</div>
-  <!-- <div v-if="error">エラーが発生しています。</div> -->
+  <!-- <p>{{ languages[0] }}</p> -->
+  <!-- <p>{{ languages[1] }}</p> -->
+  <!-- <p>{{ languages[2] }}</p> -->
 
-  <div v-if="stock > 5">まだ商品の在庫数に余裕があります。</div>
-  <div v-else-if="stock === 0">申し訳ございません。現在売り切れです。</div>
-  <div v-else>在庫数が少なくなっています。お急ぎください。</div>
+  <p v-for="language in languages" :key="language">{{ language }}</p>
+  <ul>
+    <li v-for="(user, index) in users" :key="user.id">{{ index }}-{{ user.id }}:{{ user.name }}({{ user.email }})</li>
+  </ul>
 
-  <div v-if="error2">エラーが発生しています。(v-if)</div>
-  <div v-show="error2">エラーが発生しています。(v-show)</div>
-  <!--
-  v-if、v-showの違い
-  条件がfalseの場合
-  v-showのdisplayのnone、blockの切り替えはv-ifによる要素の追加、削除より処理の負荷が低い。
-  ユーザーとのインタラクティブによってスピードは重要なので、可能な限り負荷が低い処理を実行することに意味がある。
-  例えばドロップダウンメニューのように非表示の時には何も表示されず、表示・非表示を繰り返すような機能にv-showは適している。
-  -->
+  <table>
+    <thead>
+      <tr>
+        <td>ID</td>
+        <td>ユーザー名</td>
+        <td>Email</td>
+      </tr>
+    </thead>
+    <tbody>
+      <tr v-for="user in users" :key="user.id">
+        <td>{{ user.id }}</td>
+        <td>{{ user.name }}</td>
+        <td>{{ user.email }}</td>
+      </tr>
+    </tbody>
+  </table>
+
+  <div v-for="value in user" :key="value">{{ value }}</div>
+  <div v-for="(value, name) in user" :key="value">{{ name }}:{{ value }}</div>
+
+  <!-- 複数のv-forを実行 -->
+  <div v-for="user in users" :key="user.id">
+    <div v-for="(value, name) in user" :key="value">{{ name }}:{{ value }}</div>
+  </div>
+
+  <!-- v-forディレクティブとv-ifディレクティブを合わせて利用 -->
+  <div v-for="user in users" :key="user.id">
+    <!-- adminの値がfalseのユーザーのみ表示される -->
+    <div v-if="!user.admin">
+      {{ user.name }}
+    </div>
+  </div>
 </template>
 
 <style></style>
