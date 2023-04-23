@@ -1,51 +1,44 @@
 <script setup>
-const clickButton = () => {
-  console.log('click button');
+// ref関数を利用して変数にreactivityを持たせる
+// import { ref } from 'vue';
+// const count = ref(0);
+let count = $ref(0);
+// ref関数で定義したreactiveな変数countはオブジェクトでラップされており、valueプロパティのみ持っている。
+console.log(count.value);
+
+const addCount = () => {
+  count++;
 };
-const clickButton2 = (msg) => {
-  console.log(msg);
-};
-const another = (msg) => {
-  console.log(msg);
-};
-const clickButtonEvent = (event) => {
-  console.log(event.target);
-  event.target.style.backgroundColor = 'red';
-};
-// const send = (event) => {
-//   event.preventDefault();
-//   console.log('send');
-// };
-const send = () => {
-  console.log('send');
+
+// reactiveを利用する方法
+import { reactive } from 'vue';
+const state = reactive({
+  count: 0,
+});
+const addCount2 = () => {
+  state.count++;
 };
 </script>
 
 <template>
   <h1>Vue 3 入門</h1>
-  <!-- clickイベント -->
-  <!-- <button v-on:click="clickButton">クリック</button> -->
   <div>
-    <button @click="clickButton">クリック</button>
-    <button @dbclick="clickButton">ダブルクリック</button>
+    <button type="button" @click="count++">count is: {{ count }}</button>
   </div>
+  <!-- scriptタグ内でcountの数を増やす方法 -->
   <div>
-    <button @click="clickButton2('クリック')">クリック</button>
-    <button @click="clickButton2('クリック'), another('click')">クリック</button>
+    <button type="button" @click="addCount">count is: {{ count }}</button>
   </div>
-  <!-- eventオブジェクト -->
-  <button @click="clickButtonEvent($event)">クリック</button>
-
-  <!-- イベント修飾子 -->
-  <!-- <form @submit="send($event)"> -->
-  <!--   <button>送信</button> -->
-  <!-- </form> -->
-  <form @submit.prevent="send">
-    <button>送信</button>
-  </form>
-  <form @submit.prevent="send">
-    <button @keyup.enter="submit">Enter送信</button>
-  </form>
+  <!-- reactive関数 -->
+  <div>
+    <button type="button" @click="state.count++">count is: {{ state.count }}</button>
+  </div>
+  <button type="button" @click="addCount2">count is: {{ state.count }}</button>
+  <!--
+  refとreactiveの違い
+  refの場合はscriptタグ内で値にアクセスする場合にvalueを利用すること。
+  reactiveではオブジェクトのみを扱うのに対してrefでは確認したようにprimitiveな値（stringやbooleanなど）もオブジェクトとして設定できる。
+  -->
 </template>
 
 <style></style>
