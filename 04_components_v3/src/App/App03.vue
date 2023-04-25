@@ -1,17 +1,22 @@
 <script setup>
+import Hello from './components/Hello3.vue';
 import { ref } from 'vue';
-// import Input from './components/Input.vue';
-import Hello from './components/Hello4.vue';
 
-const name = ref('John Doe');
+// const handleEvent = () => {
+//   console.log('子コンポーネントからの通知');
+// };
+
+const name = ref('John');
 
 const handleEvent = (newName) => {
+  // name.value = newName;
   name.value = newName;
 };
 </script>
 
 <template>
   <h1>Vue 3 入門</h1>
+  <!-- <Hello v-on:notification="handleEvent" /> -->
   <Hello @changeNameEvent="handleEvent" :name="name" />
 </template>
 
