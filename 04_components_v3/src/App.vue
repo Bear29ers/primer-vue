@@ -1,27 +1,26 @@
 <script setup>
-import { ref } from 'vue';
-// import Input from './components/Input.vue';
-import Hello from './components/Hello4.vue';
-
-const name = ref('John Doe');
-
-const handleEvent = (newName) => {
-  name.value = newName;
-};
+import User from './components/User2.vue';
+import User2 from './components/User3.vue';
 </script>
 
 <template>
   <h1>Vue 3 入門</h1>
-  <Hello @changeNameEvent="handleEvent" :name="name" />
+  <User>
+    <!-- defaultのslotからslot propsを受け取るので、v-slot:defaultに任意の名前を設定する -->
+    <!-- 分割代入でpropsの値を受け取ることもできる -->
+    <template v-slot:default="{ message, content }"> {{ message }}/{{ content }} </template>
+    <!-- v-slotを#にして省略できる -->
+    <template #header="slotProps">
+      <div>{{ slotProps }}</div>
+    </template>
+  </User>
+  <ul>
+    <User2>
+      <!-- slot propsのuserを受け取った親コンポーネントでオブジェクトのプロパティを表示 -->
+      <!-- 親コンポーネントで表示内容を決定できるため、コンポーネントの使い所が増える -->
+      <template v-slot="{ user }">
+        <li>{{ user.name }}</li>
+      </template>
+    </User2>
+  </ul>
 </template>
-
-<style scoped>
-#app {
-  font-family: Avenir, Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-align: center;
-  color: #2c3e50;
-  margin-top: 60px;
-}
-</style>
