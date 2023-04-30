@@ -1,47 +1,42 @@
 <script setup lang="ts">
-import HelloWorld from './components/HelloWorld.vue'
-import TheWelcome from './components/TheWelcome.vue'
+import { ref, reactive } from 'vue';
+// 型をimportする
+import type { Ref } from 'vue';
+
+// 型推論によって自動で設定されるが、明示的に設定したい場合は以下のように記述する
+// const count = ref<number>(0);
+const count: Ref<number> = ref(0);
+
+// interfaceでオブジェクトの型定義を行う
+interface User {
+  firstName: string;
+  lastName: string;
+  age: number;
+}
+
+// 型エイリアスで型定義
+// type User = {
+//   firstName: string;
+//   lastName: string;
+//   age: number;
+// };
+
+const user: User = reactive({
+  firstName: 'John',
+  lastName: 'Doe',
+  age: 25,
+});
+
+// 型アサーションで型の上書きを行う
+const user2 = reactive({} as User);
+user2.firstName = 'Kevin';
+user2.lastName = 'McDonald';
+user2.age = 25;
 </script>
 
 <template>
-  <header>
-    <img alt="Vue logo" class="logo" src="./assets/logo.svg" width="125" height="125" />
-
-    <div class="wrapper">
-      <HelloWorld msg="You did it!" />
-    </div>
-  </header>
-
-  <main>
-    <TheWelcome />
-  </main>
+  <div>Count: {{ count }}</div>
+  <button @click="count++">Add Count</button>
+  <div>Fullname: {{ `${user.firstName} ${user.lastName}` }}</div>
+  <div>Fullname: {{ `${user2.firstName} ${user2.lastName}` }}</div>
 </template>
-
-<style scoped>
-header {
-  line-height: 1.5;
-}
-
-.logo {
-  display: block;
-  margin: 0 auto 2rem;
-}
-
-@media (min-width: 1024px) {
-  header {
-    display: flex;
-    place-items: center;
-    padding-right: calc(var(--section-gap) / 2);
-  }
-
-  .logo {
-    margin: 0 2rem 0 0;
-  }
-
-  header .wrapper {
-    display: flex;
-    place-items: flex-start;
-    flex-wrap: wrap;
-  }
-}
-</style>
