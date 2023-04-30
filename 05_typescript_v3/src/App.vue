@@ -1,27 +1,20 @@
 <script setup lang="ts">
-import { reactive, computed } from 'vue';
+import HelloWorld from './components/HelloWorld.vue';
+import { ref } from 'vue';
 
-type User = {
+export type User = {
   firstName: string;
   lastName: string;
   age: number;
 };
 
-const user: User = reactive({
+const user = ref<User>({
   firstName: 'John',
   lastName: 'Doe',
   age: 25,
 });
-
-const fullName = computed<string>(() => `${user.firstName} ${user.lastName}`);
-
-const changeName = (name: string): void => {
-  user.firstName = name;
-};
-
-changeName('Jane');
 </script>
 
 <template>
-  <div>FullName: {{ fullName }}</div>
+  <HelloWorld msg="Hello" :user="user" />
 </template>
