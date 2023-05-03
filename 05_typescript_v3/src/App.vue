@@ -1,38 +1,31 @@
 <script setup lang="ts">
-import { ref, onMounted, onUnmounted } from 'vue';
+import { ref } from 'vue';
+import type { Ref } from 'vue';
 
-const handleChange = (event: Event) => {
-  // 型アサーションを使ってHTMLInputElementの型を上書き
-  console.log((event.target as HTMLInputElement).value);
+interface User {
+  id: number;
+  name: string;
+  email: string;
+  address: {
+    street: string;
+  };
+}
+
+// const users = ref<User[]>([]);
+const users: Ref<User[]> = ref([]);
+
+const fetchUsers = async (): Promise<User[]> => {
+  const res: Response = await fetch('https://jsonplaceholder.typicode.com/users');
+  console.log(res);
+  users.value = await res.json();
+  return users.value;
 };
 
-const handleChange2 = (event: Event, comment: string) => {
-  console.log((event.target as HTMLInputElement).value);
-  console.log(comment);
-};
-
-// mousemoveイベントの例
-const x = ref<number>(0);
-const y = ref<number>(0);
-
-const handleMouseMove = (event: MouseEvent) => {
-  x.value = event.pageX;
-  y.value = event.pageY;
-};
-
-onMounted(() => {
-  window.addEventListener('mousemove', handleMouseMove);
-});
-
-onUnmounted(() => {
-  window.removeEventListener('mousemove', handleMouseMove);
-});
+fetchUsers();
 </script>
 
 <template>
-  <input type="text" @change="handleChange" />
-  <input type="text" @change="handleChange2($event, 'eventの型の確認')" />
-  <div>
-    <span>x: {{ x }} y: {{ y }}</span>
+  <div v-for="user in users" :key="user.id">
+    {{ user.name }}
   </div>
 </template>

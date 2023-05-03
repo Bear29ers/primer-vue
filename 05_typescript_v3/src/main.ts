@@ -5,6 +5,7 @@ import { createApp } from 'vue';
 // import App from './App/App04.vue'
 // import App from './App/App05.vue'
 // import App from './App/App06.vue'
+// import App from './App/App07.vue'
 import App from './App.vue';
 
 import './assets/main.css';
