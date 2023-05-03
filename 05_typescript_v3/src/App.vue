@@ -1,0 +1,31 @@
+<script setup lang="ts">
+import { ref } from 'vue';
+import type { Ref } from 'vue';
+
+interface User {
+  id: number;
+  name: string;
+  email: string;
+  address: {
+    street: string;
+  };
+}
+
+// const users = ref<User[]>([]);
+const users: Ref<User[]> = ref([]);
+
+const fetchUsers = async (): Promise<User[]> => {
+  const res: Response = await fetch('https://jsonplaceholder.typicode.com/users');
+  console.log(res);
+  users.value = await res.json();
+  return users.value;
+};
+
+fetchUsers();
+</script>
+
+<template>
+  <div v-for="user in users" :key="user.id">
+    {{ user.name }}
+  </div>
+</template>
