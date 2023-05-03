@@ -1,6 +1,7 @@
-<script setup lang="ts"></script>
+<script setup lang="ts">
+import Default from './layouts/Default.vue';
+</script>
 
 <template>
-  <div class="font-semibold">ダッシュボード</div>
-  <div class="font-black">ダッシュボード</div>
+  <Default>ダッシュボード</Default>
 </template>
