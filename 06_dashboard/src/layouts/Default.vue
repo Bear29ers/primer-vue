@@ -2,6 +2,7 @@
 import { ref, onMounted, onUnmounted } from 'vue';
 import { Bars3Icon as MenuIcon, MoonIcon, SunIcon } from '@heroicons/vue/24/outline';
 import { debounce } from 'lodash';
+import DropdownMenu from '../components/DropdownMenu.vue';
 
 // アクセス時のブラウザ幅に合わせてサイドバーを表示させる（1280pxより大きい場合はサイドバーが表示された状態）
 const innerWidth = ref(window.innerWidth);
@@ -60,9 +61,10 @@ onUnmounted(() => {
     <div class="bg-gray-100 dark:bg-gray-900 h-screen overflow-hidden duration-300" :class="{ 'xl:pl-64': show }">
       <div class="flex items-center justify-between bg-white dark:bg-gray-800 rounded shadow m-4 p-4">
         <MenuIcon class="h-6 w-6 text-gray-600 dark:text-gray-300 cursor-pointer" @click="show = !show" />
-        <div>
+        <div class="flex items-center space-x-4">
           <MoonIcon class="w-7 h-7 text-gray-600 cursor-pointer" @click="changeMode('dark')" v-if="theme === 'light'" />
           <SunIcon class="w-7 h-7 text-gray-300 cursor-pointer" @click="changeMode('light')" v-else />
+          <DropdownMenu />
         </div>
       </div>
       <div class="dark:text-gray-300">
