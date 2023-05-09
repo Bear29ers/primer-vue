@@ -1,17 +1,29 @@
 <script setup lang="ts">
-import { ref } from 'vue';
+import { ref, onMounted, onUnmounted } from 'vue';
 import { UserIcon, ArrowRightOnRectangleIcon as LogoutIcon } from '@heroicons/vue/24/outline';
 
 const show = ref(false);
+const root = ref(null);
 
 // showの値によってメニューの表示・非表示を切り替える
 const toggle = () => {
   show.value = !show.value;
 };
+
+// メニュー要素の外側をクリックしたかどうかを判断する
+const clickOutside = (e) => {
+  if (!root.value.contains(e.target) && show.value) {
+    show.value = false;
+  }
+};
+
+// clickOutside関数をイベントリスナーに登録し、マウント時に追加、アンマウント時に削除する
+onMounted(() => document.addEventListener('click', clickOutside));
+onUnmounted(() => document.removeEventListener('click', clickOutside));
 </script>
 
 <template>
-  <div class="relative">
+  <div class="relative" ref="root">
     <img src="../assets/avatar.jpg" alt="avatar" class="rounded-full w-10 h-10 cursor-pointer" @click="toggle" />
     <transition
       enter-active-class="transition duration-300"
