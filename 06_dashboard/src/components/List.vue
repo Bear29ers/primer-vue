@@ -13,6 +13,7 @@ const lists = reactive([
     name: 'EC',
     icon: 'ShoppingCartIcon',
     link: '/#',
+    show: false,
     sublists: [
       {
         name: '商品一覧',
@@ -31,6 +32,12 @@ const icons = {
   TemplateIcon: TemplateIcon,
   ShoppingCartIcon: ShoppingCartIcon,
 };
+
+// リストの表示・非表示（showの値を更新）
+const toggle = (name) => {
+  const list = lists.find((list) => list.name === name);
+  list.show = !list.show;
+};
 </script>
 
 <template>
@@ -44,11 +51,15 @@ const icons = {
         <component :is="icons[list.icon]" class="w-6 h-6 mr-2"></component>
         <span>{{ list.name }}</span>
       </a>
-      <div v-else class="flex items-center p-2 cursor-pointer rounded-sm hover:bg-blue-400 hover:text-white">
+      <div
+        v-else
+        class="flex items-center p-2 cursor-pointer rounded-sm hover:bg-blue-400 hover:text-white"
+        @click="toggle(list.name)"
+      >
         <component :is="icons[list.icon]" class="w-6 h-6 mr-2"></component>
         <span>{{ list.name }}</span>
       </div>
-      <ul class="mt-1">
+      <ul class="mt-1" v-show="list.show">
         <li class="mb-1" v-for="list in list.sublists" :key="list.name">
           <a :href="list.link" class="block p-2 rounded-sm hover:bg-blue-400 hover:text-white">
             <span class="pl-8">{{ list.name }}</span>
