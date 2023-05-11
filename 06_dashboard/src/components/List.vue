@@ -23,6 +23,10 @@ const lists = reactive([
         name: '注文一覧',
         link: '/#',
       },
+      {
+        name: 'カテゴリー一覧',
+        link: '/#',
+      },
     ],
   },
 ]);
@@ -37,6 +41,26 @@ const icons = {
 const toggle = (name) => {
   const list = lists.find((list) => list.name === name);
   list.show = !list.show;
+};
+
+// サブメニューを開いた際に高さを取得して設定する
+const enter = (element) => {
+  element.style.height = 'auto';
+  const height = getComputedStyle(element).height;
+  element.style.height = 0;
+  getComputedStyle(element);
+  setTimeout(() => {
+    element.style.height = height;
+  });
+};
+
+// サブメニューを閉じる際に高さを設定する
+const leave = (element) => {
+  element.style.height = getComputedStyle(element).height;
+  getComputedStyle(element);
+  setTimeout(() => {
+    element.style.height = 0;
+  });
 };
 </script>
 
@@ -62,13 +86,23 @@ const toggle = (name) => {
         </div>
         <ChevronDownIcon class="w-4 h-4 transform duration-300" :class="!list.show ? 'rotate-0' : '-rotate-180'" />
       </div>
-      <ul class="mt-1" v-show="list.show">
-        <li class="mb-1" v-for="list in list.sublists" :key="list.name">
-          <a :href="list.link" class="block p-2 rounded-sm hover:bg-blue-400 hover:text-white">
-            <span class="pl-8">{{ list.name }}</span>
-          </a>
-        </li>
-      </ul>
+      <!-- transitionタグに関数を設定する -->
+      <transition @enter="enter" @leave="leave">
+        <ul class="mt-1 overflow-hidden" v-show="list.show">
+          <li class="mb-1" v-for="list in list.sublists" :key="list.name">
+            <a :href="list.link" class="block p-2 rounded-sm hover:bg-blue-400 hover:text-white">
+              <span class="pl-8">{{ list.name }}</span>
+            </a>
+          </li>
+        </ul>
+      </transition>
     </li>
   </ul>
 </template>
+
+<style scoped>
+.v-enter-active,
+.v-leave-active {
+  transition: height 0.3s;
+}
+</style>
