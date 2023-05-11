@@ -1,6 +1,6 @@
 <script setup>
 import { reactive } from 'vue';
-import { RectangleGroupIcon as TemplateIcon, ShoppingCartIcon } from '@heroicons/vue/24/outline';
+import { RectangleGroupIcon as TemplateIcon, ShoppingCartIcon, ChevronDownIcon } from '@heroicons/vue/24/outline';
 
 // メニューリストの情報
 const lists = reactive([
@@ -53,11 +53,14 @@ const toggle = (name) => {
       </a>
       <div
         v-else
-        class="flex items-center p-2 cursor-pointer rounded-sm hover:bg-blue-400 hover:text-white"
+        class="flex items-center justify-between p-2 cursor-pointer rounded-sm hover:bg-blue-400 hover:text-white"
         @click="toggle(list.name)"
       >
-        <component :is="icons[list.icon]" class="w-6 h-6 mr-2"></component>
-        <span>{{ list.name }}</span>
+        <div class="flex items-center">
+          <component :is="icons[list.icon]" class="w-6 h-6 mr-2"></component>
+          <span>{{ list.name }}</span>
+        </div>
+        <ChevronDownIcon class="w-4 h-4 transform duration-300" :class="!list.show ? 'rotate-0' : '-rotate-180'" />
       </div>
       <ul class="mt-1" v-show="list.show">
         <li class="mb-1" v-for="list in list.sublists" :key="list.name">
