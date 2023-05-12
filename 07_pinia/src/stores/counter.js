@@ -1,5 +1,5 @@
 import { defineStore } from 'pinia';
-import { warn } from 'vue';
+import { computed, warn } from 'vue';
 
 export const useStoreCounter = defineStore('counter', {
   state: () => ({
@@ -20,3 +20,18 @@ export const useStoreCounter = defineStore('counter', {
     },
   },
 });
+
+// 関数を利用したdefineStoreの書き方
+/*
+export const useStoreCounter = defineStore('counter', () => {
+  const count = ref(1);
+
+  const increment = () => {
+    count.value++;
+  };
+
+  const doubleCount = computed(() => count.value * 2);
+
+  return { count, increment, doubleCount };
+});
+*/

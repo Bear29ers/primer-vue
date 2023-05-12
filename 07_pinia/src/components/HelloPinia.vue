@@ -6,4 +6,6 @@ const counter = useStoreCounter();
 <template>
   <h2>Hello Pinia</h2>
   <p>カウント: {{ counter.count }}</p>
+  <!-- $resetメソッドにより初期値にリセット -->
+  <button @click="counter.$reset">Reset</button>
 </template>
