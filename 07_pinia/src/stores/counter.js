@@ -8,4 +8,10 @@ export const useStoreCounter = defineStore('counter', {
       name: 'John Doe',
     },
   }),
+  // PiniaではdefineStoreのプロパティactionsに関数を追加してStoreに定義したデータの更新を行う
+  actions: {
+    increment() {
+      this.count++;
+    },
+  },
 });

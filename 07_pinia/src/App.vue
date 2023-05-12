@@ -8,5 +8,8 @@ const counter = useStoreCounter();
 <template>
   <h1>Pinia入門</h1>
   <p>Count: {{ counter.count }}</p>
+  <div>
+    <button @click="counter.increment">Up</button>
+  </div>
   <HelloPinia />
 </template>
