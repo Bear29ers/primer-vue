@@ -18,6 +18,17 @@ const patch = () => {
   });
    */
 };
+
+// $stateに値を設定することで指定したプロパティの値にすべて取り替えることができる
+const replace = () => {
+  counter.$state = {
+    count: 100,
+    count2: 200,
+    user: {
+      name: 'Jane Doe',
+    },
+  };
+};
 </script>
 
 <template>
@@ -26,4 +37,5 @@ const patch = () => {
   <!-- $resetメソッドにより初期値にリセット -->
   <button @click="counter.$reset">Reset</button>
   <button @click="patch">Patch</button>
+  <button @click="replace">Replace</button>
 </template>
