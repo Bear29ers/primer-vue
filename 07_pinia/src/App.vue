@@ -1,6 +1,7 @@
 <script setup>
 import { useStoreCounter } from './stores/counter';
 import HelloPinia from './components/HelloPinia.vue';
+import ProductList from './components/ProductList.vue';
 import { storeToRefs } from 'pinia';
 
 const counter = useStoreCounter();
@@ -10,6 +11,7 @@ const { increment } = counter;
 </script>
 
 <template>
+  <!-- 
   <h1>Pinia入門</h1>
   <p>Count: {{ count }}</p>
   <p>DoubleCount: {{ doubleCount }}</p>
@@ -17,4 +19,12 @@ const { increment } = counter;
     <button @click="increment">Up</button>
   </div>
   <HelloPinia />
+  -->
+
+  <div>
+    <h1>Pinia入門（カート）</h1>
+    <hr />
+    <h2>商品一覧</h2>
+    <ProductList />
+  </div>
 </template>
