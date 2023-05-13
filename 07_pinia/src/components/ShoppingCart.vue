@@ -9,6 +9,8 @@ const { items } = storeToRefs(useStoreCart());
   <h2>カートの中身</h2>
   <p v-show="!items.length"><i>カートに商品は入っていません。</i></p>
   <ul>
-    <li v-for="item in items" :key="item.id">{{ item.title }} - ¥{{ item.price.toLocaleString() }}</li>
+    <li v-for="item in items" :key="item.id">
+      {{ item.title }} - ¥{{ item.price.toLocaleString() }} x {{ item.quantity }}
+    </li>
   </ul>
 </template>
