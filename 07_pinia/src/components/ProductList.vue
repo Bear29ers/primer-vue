@@ -1,10 +1,13 @@
 <script setup>
-import { onMounted, ref } from 'vue';
-import shop from '../api/shop.js';
+import { onMounted } from 'vue';
+import { storeToRefs } from 'pinia';
+import { useStoreProducts } from '../stores/products';
 
-const products = ref([]);
+const { products } = storeToRefs(useStoreProducts());
+const { getProducts } = useStoreProducts();
+
 onMounted(() => {
-  shop.getProducts((data) => (products.value = data));
+  getProducts();
 });
 </script>
 
