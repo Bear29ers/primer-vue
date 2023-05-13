@@ -17,7 +17,7 @@ onMounted(() => {
   <ul>
     <li v-for="product in products" :key="product.id">
       {{ product.title }} - ¥{{ product.price.toLocaleString() }}
-      <button @click="addCart(product)">カートへ</button>
+      <button @click="addCart(product)" :disabled="!product.inventory">カートへ</button>
     </li>
   </ul>
 </template>

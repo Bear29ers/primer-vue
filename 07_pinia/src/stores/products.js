@@ -9,5 +9,9 @@ export const useStoreProducts = defineStore('products', {
     getProducts() {
       shop.getProducts((products) => (this.products = products));
     },
+    decrementInventory(productId) {
+      const product = this.products.find((product) => product.id === productId);
+      product.inventory--;
+    },
   },
 });
