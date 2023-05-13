@@ -2,6 +2,7 @@
 import { useStoreCounter } from './stores/counter';
 import HelloPinia from './components/HelloPinia.vue';
 import ProductList from './components/ProductList.vue';
+import ShoppingCart from './components/ShoppingCart.vue';
 import { storeToRefs } from 'pinia';
 
 const counter = useStoreCounter();
@@ -26,5 +27,7 @@ const { increment } = counter;
     <hr />
     <h2>商品一覧</h2>
     <ProductList />
+    <hr />
+    <ShoppingCart />
   </div>
 </template>
