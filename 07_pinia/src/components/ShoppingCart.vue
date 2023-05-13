@@ -2,7 +2,7 @@
 import { storeToRefs } from 'pinia';
 import { useStoreCart } from '../stores/cart';
 
-const { items } = storeToRefs(useStoreCart());
+const { items, total } = storeToRefs(useStoreCart());
 </script>
 
 <template>
@@ -13,4 +13,5 @@ const { items } = storeToRefs(useStoreCart());
       {{ item.title }} - ¥{{ item.price.toLocaleString() }} x {{ item.quantity }}
     </li>
   </ul>
+  <h3>合計金額: ¥{{ total.toLocaleString() }}</h3>
 </template>
